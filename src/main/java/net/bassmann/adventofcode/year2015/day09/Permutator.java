@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
  * A Steinhaus–Johnson–Trotter like permutation generator; can be used to generate all n!
  * permutations of a list from 0 to n-1.
  */
-class Permutator implements Iterator<List<Integer>> {
+public class Permutator implements Iterator<List<Integer>> {
 
   enum Direction {
     LEFT,
@@ -29,7 +29,7 @@ class Permutator implements Iterator<List<Integer>> {
   /** The direction of each value, a mapping of value -> direction. */
   private final Direction[] directions;
 
-  Permutator(int size) {
+  public Permutator(int size) {
     this.size = size;
     permutationsLeft = -1;
     values = new int[size];
