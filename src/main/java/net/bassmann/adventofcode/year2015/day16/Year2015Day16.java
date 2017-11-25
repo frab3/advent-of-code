@@ -1,5 +1,8 @@
 package net.bassmann.adventofcode.year2015.day16;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import net.bassmann.adventofcode.common.AbstractDay;
 
 /**
@@ -51,8 +54,23 @@ import net.bassmann.adventofcode.common.AbstractDay;
  * <h2>Part One</h2>
  *
  * What is the number of the Sue that got you the gift?
+ *
+ * <h2>Part Two</h2>
+ *
+ * As you're about to send the thank you note, something in the MFCSAM's instructions catches your
+ * eye. Apparently, it has an outdated retroencabulator, and so the output from the machine isn't
+ * exact values - some of them indicate ranges.
+ *
+ * <p>In particular, the cats and trees readings indicates that there are greater than that many
+ * (due to the unpredictable nuclear decay of cat dander and tree pollen), while the pomeranians and
+ * goldfish readings indicate that there are fewer than that many (due to the modial interaction of
+ * magnetoreluctance).
+ *
+ * <p>What is the number of the real Aunt Sue?
  */
 public class Year2015Day16 extends AbstractDay {
+
+  private List<AuntSue> aunties;
 
   public Year2015Day16() {
     super(2015, 16);
@@ -60,11 +78,36 @@ public class Year2015Day16 extends AbstractDay {
 
   @Override
   public String solvePart1() {
-    return null;
+    final Map<String, Integer> scan = getScanResult();
+    AuntSue coolSue = getAunties().stream().filter(a -> a.matchesScan(scan)).findAny().get();
+    return Integer.toString(coolSue.getNumber());
   }
 
   @Override
   public String solvePart2() {
-    return null;
+    final Map<String, Integer> scan = getScanResult();
+    AuntSue coolSue = getAunties().stream().filter(a -> a.matchesScanRanges(scan)).findAny().get();
+    return Integer.toString(coolSue.getNumber());
+  }
+
+  private List<AuntSue> getAunties() {
+    if (aunties == null) {
+      aunties = getRiddleInput().lines().map(AuntSue::fromString).collect(Collectors.toList());
+    }
+    return aunties;
+  }
+
+  private Map<String, Integer> getScanResult() {
+    return Map.of(
+        "children", 3,
+        "cats", 7,
+        "samoyeds", 2,
+        "pomeranians", 3,
+        "akitas", 0,
+        "vizslas", 0,
+        "goldfish", 5,
+        "trees", 3,
+        "cars", 2,
+        "perfumes", 1);
   }
 }
