@@ -92,6 +92,68 @@ import net.bassmann.adventofcode.common.AbstractDay;
  *
  * In your grid of 100x100 lights, given your initial configuration, how many lights are on after
  * 100 steps?
+ *
+ * <h2>Part Two</h2>
+ *
+ * You flip the instructions over; Santa goes on to point out that this is all just an
+ * implementation of Conway's Game of Life. At least, it was, until you notice that something's
+ * wrong with the grid of lights you bought: four lights, one in each corner, are stuck on and can't
+ * be turned off. The example above will actually run like this:
+ *
+ * <pre>
+ * Initial state:
+ * ##.#.#
+ * ...##.
+ * #....#
+ * ..#...
+ * #.#..#
+ * ####.#
+ *
+ * After 1 step:
+ * #.##.#
+ * ####.#
+ * ...##.
+ * ......
+ * #...#.
+ * #.####
+ *
+ * After 2 steps:
+ * #..#.#
+ * #....#
+ * .#.##.
+ * ...##.
+ * .#..##
+ * ##.###
+ *
+ * After 3 steps:
+ * #...##
+ * ####.#
+ * ..##.#
+ * ......
+ * ##....
+ * ####.#
+ *
+ * After 4 steps:
+ * #.####
+ * #....#
+ * ...#..
+ * .##...
+ * #.....
+ * #.#..#
+ *
+ * After 5 steps:
+ * ##.###
+ * .##..#
+ * .##...
+ * .##...
+ * #.#...
+ * ##...#
+ * </pre>
+ *
+ * After 5 steps, this example now has 17 lights on.
+ *
+ * <p>In your grid of 100x100 lights, given your initial configuration, but with the four corners
+ * always in the on state, how many lights are on after 100 steps?
  */
 public class Year2015Day18 extends AbstractDay {
 
@@ -101,11 +163,27 @@ public class Year2015Day18 extends AbstractDay {
 
   @Override
   public String solvePart1() {
-    return null;
+    LightGrid lg = new LightGrid(100);
+    lg.init(getRiddleInput().asList());
+    for (int i = 0; i < 100; i++) {
+      lg.next();
+    }
+    int count = lg.countOn();
+    return Integer.toString(count);
   }
 
   @Override
   public String solvePart2() {
-    return null;
+    LightGrid lg = new LightGrid(100);
+    lg.init(getRiddleInput().asList());
+    for (int i = 0; i < 100; i++) {
+      lg.next();
+      lg.setState(0, 0, true);
+      lg.setState(0, 99, true);
+      lg.setState(99, 0, true);
+      lg.setState(99, 99, true);
+    }
+    int count = lg.countOn();
+    return Integer.toString(count);
   }
 }
