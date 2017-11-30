@@ -1,5 +1,7 @@
 package net.bassmann.adventofcode.year2015.day19;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import net.bassmann.adventofcode.common.AbstractDay;
 
 /**
@@ -52,6 +54,37 @@ import net.bassmann.adventofcode.common.AbstractDay;
  *
  * How many distinct molecules can be created after all the different ways you can do one
  * replacement on the medicine molecule?
+ *
+ * <h2>Part Two</h2>
+ *
+ * Now that the machine is calibrated, you're ready to begin molecule fabrication.
+ *
+ * <p>Molecule fabrication always begins with just a single electron, e, and applying replacements
+ * one at a time, just like the ones during calibration.
+ *
+ * <p>For example, suppose you have the following replacements:
+ *
+ * <pre>
+ * e => H
+ * e => O
+ * H => HO
+ * H => OH
+ * O => HH
+ * </pre>
+ *
+ * If you'd like to make HOH, you start with e, and then make the following replacements:
+ *
+ * <ul>
+ *   <li>e => O to get O
+ *   <li>O => HH to get HH
+ *   <li>H => OH (on the second H) to get HOH
+ * </ul>
+ *
+ * So, you could make HOH after 3 steps. Santa's favorite molecule, HOHOHO, can be made in 6 steps.
+ *
+ * <p>How long will it take to make the medicine? Given the available replacements and the medicine
+ * molecule in your puzzle input, what is the fewest number of steps to go from e to the medicine
+ * molecule?
  */
 public class Year2015Day19 extends AbstractDay {
 
@@ -61,11 +94,27 @@ public class Year2015Day19 extends AbstractDay {
 
   @Override
   public String solvePart1() {
-    return null;
+    MoleculeMachine m = new MoleculeMachine(getReplacementRules(), getMolecule());
+    int count = m.countOneReplacements2();
+    return Integer.toString(count);
   }
 
   @Override
   public String solvePart2() {
-    return null;
+    long solution = MoleculeMachine.getAskalskisFormula(getMolecule());
+    return Long.toString(solution);
+  }
+
+  private List<ReplacementRule> getReplacementRules() {
+    return getRiddleInput()
+        .lines()
+        .filter(s -> s.contains("=>"))
+        .map(ReplacementRule::fromString)
+        .collect(Collectors.toList());
+  }
+
+  private String getMolecule() {
+    List<String> input = getRiddleInput().asList();
+    return input.get(input.size() - 1);
   }
 }
