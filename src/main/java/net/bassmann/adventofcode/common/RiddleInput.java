@@ -16,6 +16,10 @@ public class RiddleInput {
   private final LocalDate day;
   private Path path;
 
+  /* Lazy vars */
+  private List<String> list = null;
+  private String firstLine = null;
+
   RiddleInput(LocalDate day) {
     this.day = day;
   }
@@ -51,6 +55,13 @@ public class RiddleInput {
   }
 
   public List<String> asList() {
+    if (list == null) {
+      list = readList();
+    }
+    return list;
+  }
+
+  private List<String> readList() {
     try {
       return Files.readAllLines(getPath());
     } catch (IOException e) {
@@ -59,8 +70,15 @@ public class RiddleInput {
   }
 
   public String firstLine() {
-    try {
-      return Files.lines(getPath()).findFirst().orElse("");
+    if (firstLine == null) {
+      firstLine = readFirstLine();
+    }
+    return firstLine;
+  }
+
+  private String readFirstLine() {
+    try (Stream<String> linesStream = Files.lines(getPath())) {
+      return linesStream.findFirst().orElse("");
     } catch (IOException e) {
       throw new RiddleInputAccessException(e);
     }
