@@ -1,7 +1,6 @@
 package net.bassmann.adventofcode.year2017.day02;
 
 import java.util.regex.Pattern;
-import java.util.stream.IntStream;
 import net.bassmann.adventofcode.common.AbstractDay;
 
 /**
@@ -25,9 +24,9 @@ import net.bassmann.adventofcode.common.AbstractDay;
  * </pre>
  *
  * <ul>
- * <li>The first row's largest and smallest values are 9 and 1, and their difference is 8.
- * <li>The second row's largest and smallest values are 7 and 3, and their difference is 4.
- * <li>The third row's difference is 6.
+ *   <li>The first row's largest and smallest values are 9 and 1, and their difference is 8.
+ *   <li>The second row's largest and smallest values are 7 and 3, and their difference is 4.
+ *   <li>The third row's difference is 6.
  * </ul>
  *
  * In this example, the spreadsheet's checksum would be 8 + 4 + 6 = 18.
@@ -58,10 +57,10 @@ import net.bassmann.adventofcode.common.AbstractDay;
  * </pre>
  *
  * <ul>
- * <li>In the first row, the only two numbers that evenly divide are 8 and 2; the result of this
- * division is 4.
- * <li>In the second row, the two numbers are 9 and 3; the result is 3.
- * <li>In the third row, the result is 2.
+ *   <li>In the first row, the only two numbers that evenly divide are 8 and 2; the result of this
+ *       division is 4.
+ *   <li>In the second row, the two numbers are 9 and 3; the result is 3.
+ *   <li>In the third row, the result is 2.
  * </ul>
  *
  * In this example, the sum of the results would be 4 + 3 + 2 = 9.
@@ -78,43 +77,57 @@ public class Year2017Day02 extends AbstractDay {
 
   @Override
   public String solvePart1() {
-    final int sum = getRiddleInput().lines().mapToInt(Year2017Day02::checksum).sum();
+    final int sum =
+        getRiddleInput()
+            .lines()
+            .map(Year2017Day02::splitToSortedArray)
+            .mapToInt(Year2017Day02::checksum)
+            .sum();
     return Integer.toString(sum);
   }
 
   @Override
   public String solvePart2() {
-    final int sum = getRiddleInput().lines().mapToInt(Year2017Day02::divisible).sum();
+    final int sum =
+        getRiddleInput()
+            .lines()
+            .map(Year2017Day02::splitToSortedArray)
+            .mapToInt(Year2017Day02::divisible)
+            .sum();
     return Integer.toString(sum);
   }
 
-  private static IntStream splitToIntStream(String line) {
-    return WHITESPACE.splitAsStream(line).mapToInt(Integer::parseInt);
+  /**
+   * As part of both solutions, it is helpful to split each line of the input spreadsheet into an
+   * sorted int-array.
+   */
+  static int[] splitToSortedArray(String line) {
+    return WHITESPACE.splitAsStream(line).mapToInt(Integer::parseInt).sorted().toArray();
   }
 
   /**
    * Solution for part one: returns the difference between the maximum number and the minimum number
    * of the input.
    */
-  static int checksum(String input) {
-    int max = splitToIntStream(input).max().orElse(0);
-    int min = splitToIntStream(input).min().orElse(0);
+  static int checksum(int[] sortedValues) {
+    int min = sortedValues[0];
+    int max = sortedValues[sortedValues.length - 1];
     return max - min;
   }
 
   /**
-   * Solution for part two: To find the divisible result I first sort the input (min to max) and
-   * then check if any number can divide the rest of the numbers evenly.
+   * Solution for part two: To find the divisible result I check if any number can divide the rest
+   * of the numbers evenly.
    */
-  static int divisible(String input) {
-    int[] values = splitToIntStream(input).sorted().toArray();
+  static int divisible(int[] sortedValues) {
+    final int length = sortedValues.length;
 
-    for (int divisorIndex = 0; divisorIndex < values.length; divisorIndex++) {
-      for (int dividendIndex = divisorIndex + 1; dividendIndex < values.length; dividendIndex++) {
-        final int divisor = values[divisorIndex];
-        final int dividend = values[dividendIndex];
-        if (divisor % dividend == 0) {
-          return divisor / dividend;
+    for (int divisorIndex = 0; divisorIndex < length; divisorIndex++) {
+      for (int dividendIndex = divisorIndex + 1; dividendIndex < length; dividendIndex++) {
+        final int divisor = sortedValues[divisorIndex];
+        final int dividend = sortedValues[dividendIndex];
+        if (dividend % divisor == 0) {
+          return dividend / divisor;
         }
       }
     }

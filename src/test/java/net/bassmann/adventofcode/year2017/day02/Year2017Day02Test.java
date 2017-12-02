@@ -24,12 +24,14 @@ class Year2017Day02Test {
   @ParameterizedTest
   @CsvSource({"'5 1 9 5', 8", "'7 5 3', 4", "'2 4 6 8', 6"})
   void testChecksum(String input, int expected) {
-    assertEquals(expected, Year2017Day02.checksum(input));
+    int[] sortedValues = Year2017Day02.splitToSortedArray(input);
+    assertEquals(expected, Year2017Day02.checksum(sortedValues));
   }
 
   @ParameterizedTest
   @CsvSource({"'5 9 2 8', 4", "'9 4 7 3', 3", "'3 8 6 5', 2"})
   void testDivisible(String input, int expected) {
-    assertEquals(expected, Year2017Day02.divisible(input));
+    int[] sortedValues = Year2017Day02.splitToSortedArray(input);
+    assertEquals(expected, Year2017Day02.divisible(sortedValues));
   }
 }
