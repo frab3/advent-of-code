@@ -23,6 +23,7 @@ import net.bassmann.adventofcode.year2015.day18.Year2015Day18;
 import net.bassmann.adventofcode.year2015.day19.Year2015Day19;
 import net.bassmann.adventofcode.year2017.day01.Year2017Day01;
 import net.bassmann.adventofcode.year2017.day02.Year2017Day02;
+import net.bassmann.adventofcode.year2017.day03.Year2017Day03;
 
 public class Main {
 
@@ -48,7 +49,8 @@ public class Main {
           new Year2015Day18(),
           new Year2015Day19(),
           new Year2017Day01(),
-          new Year2017Day02());
+          new Year2017Day02(),
+          new Year2017Day03());
 
   public static void main(String[] args) {
     Day currentDay = days.get(days.size() - 1);
