@@ -11,11 +11,11 @@ class Year2017Day03Test {
 
   @Test
   void solvePart1() {
-    assertEquals(null, today.solvePart1());
+    assertEquals("430", today.solvePart1());
   }
 
   @Test
   void solvePart2() {
-    assertEquals(null, today.solvePart2());
+    assertEquals("312453", today.solvePart2());
   }
 }

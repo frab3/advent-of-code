@@ -10,11 +10,18 @@ public class Year2017Day03 extends AbstractDay {
 
   @Override
   public String solvePart1() {
-    return null;
+    Coordinates c = SquareSpiral.numberToCoordinates(getInput());
+    return Integer.toString(c.getManhattanDistance());
   }
 
   @Override
   public String solvePart2() {
-    return null;
+    final SquareSpiralWithNeighbourSums spiral = new SquareSpiralWithNeighbourSums();
+    int solution = spiral.optimizedFindNumberGreaterThan(getInput());
+    return Integer.toString(solution);
+  }
+
+  private int getInput() {
+    return Integer.parseInt(getRiddleInput().firstLine());
   }
 }
