@@ -31,14 +31,14 @@ import net.bassmann.adventofcode.common.AbstractDay;
  * in parentheses. The following steps would be taken before an exit is found:
  *
  * <ul>
- * <li>(0) 3 0 1 -3 - before we have taken any steps.
- * <li>(1) 3 0 1 -3 - jump with offset 0 (that is, don't jump at all). Fortunately, the
- * instruction is then incremented to 1.
- * <li>2 (3) 0 1 -3 - step forward because of the instruction we just modified. The first
- * instruction is incremented again, now to 2.
- * <li>2 4 0 1 (-3) - jump all the way to the end; leave a 4 behind.
- * <li>2 (4) 0 1 -2 - go back to where we just were; increment -3 to -2.
- * <li>2 5 0 1 -2 - jump 4 steps forward, escaping the maze.
+ *   <li>(0) 3 0 1 -3 - before we have taken any steps.
+ *   <li>(1) 3 0 1 -3 - jump with offset 0 (that is, don't jump at all). Fortunately, the
+ *       instruction is then incremented to 1.
+ *   <li>2 (3) 0 1 -3 - step forward because of the instruction we just modified. The first
+ *       instruction is incremented again, now to 2.
+ *   <li>2 4 0 1 (-3) - jump all the way to the end; leave a 4 behind.
+ *   <li>2 (4) 0 1 -2 - go back to where we just were; increment -3 to -2.
+ *   <li>2 5 0 1 -2 - jump 4 steps forward, escaping the maze.
  * </ul>
  *
  * In this example, the exit is reached in 5 steps.
@@ -73,16 +73,16 @@ public class Year2017Day05 extends AbstractDay {
   @Override
   public String solvePart2() {
     int[] jumpList = getRiddleInput().lines().mapToInt(Integer::parseInt).toArray();
-    int jumps = countStrangeJumps(jumpList, true);
+    int jumps = countEvenStrangerJumps(jumpList);
     return Integer.toString(jumps);
   }
 
   static int countStrangeJumps(int[] jumpList) {
-    return countStrangeJumps(jumpList, false);
+    return countJumps(jumpList, false);
   }
 
-  static int countEventStrangerJumps(int[] jumpList) {
-    return countStrangeJumps(jumpList, true);
+  static int countEvenStrangerJumps(int[] jumpList) {
+    return countJumps(jumpList, true);
   }
 
   /**
@@ -93,12 +93,14 @@ public class Year2017Day05 extends AbstractDay {
    * @param part2 set this to {@code true} to get the modification behaviour needed for part 2.
    * @return the number of jumps until an index outside of the input list is reached.
    */
-  private static int countStrangeJumps(int[] jumpList, boolean part2) {
+  private static int countJumps(int[] jumpList, boolean part2) {
     int count = 0;
     int pos = 0;
+    int offset;
 
-    while (pos >= 0 && pos < jumpList.length) {
-      final int offset = jumpList[pos];
+    final int length = jumpList.length;
+    while (pos >= 0 && pos < length) {
+      offset = jumpList[pos];
       if (part2 && offset >= 3) {
         jumpList[pos]--;
       } else {

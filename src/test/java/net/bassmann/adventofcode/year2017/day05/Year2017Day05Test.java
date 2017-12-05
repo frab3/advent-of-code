@@ -35,7 +35,7 @@ class Year2017Day05Test {
     int[] testInput = {0, 3, 0, 1, -3};
     int[] after = {2, 3, 2, 3, -1};
     int expected = 10;
-    int actual = Year2017Day05.countEventStrangerJumps(testInput);
+    int actual = Year2017Day05.countEvenStrangerJumps(testInput);
     assertEquals(expected, actual);
     assertArrayEquals(after, testInput);
   }
