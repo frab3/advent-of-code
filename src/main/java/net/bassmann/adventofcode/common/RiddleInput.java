@@ -54,6 +54,12 @@ public class RiddleInput {
     }
   }
 
+  /**
+   * Returns the days riddle input as an immutable list of String; each line in the input file is a
+   * String in the list. The file is only read once and cached.
+   *
+   * @return days riddle input as a list of String
+   */
   public List<String> asList() {
     if (list == null) {
       list = readList();
