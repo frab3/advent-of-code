@@ -52,16 +52,16 @@ public class Year2015Day17 extends AbstractDay {
 
   @Override
   public String solvePart1() {
-    final List<Container> containers = getContainers();
-    int combinations = countPossibleCombinations(containers, 0, EGGNOG);
+    final List<Container> containerList = getContainers();
+    int combinations = countPossibleCombinations(containerList, 0, EGGNOG);
     return Integer.toString(combinations);
   }
 
   @Override
   public String solvePart2() {
-    final List<Container> containers = getContainers();
+    final List<Container> containerList = getContainers();
     final List<Set<Container>> allCombinations =
-        fillContainers(containers, new HashSet<>(), 0, EGGNOG);
+        fillContainers(containerList, new HashSet<>(), 0, EGGNOG);
     final int min = getMinimum(allCombinations);
     final long minCount = countOfSize(allCombinations, min);
     return Long.toString(minCount);
