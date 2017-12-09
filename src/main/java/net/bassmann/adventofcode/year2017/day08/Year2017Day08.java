@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import net.bassmann.adventofcode.common.AbstractDay;
+import net.bassmann.adventofcode.common.Solution;
 
 /**
  * Day 8: I Heard You Like Registers.
@@ -18,9 +19,9 @@ import net.bassmann.adventofcode.common.AbstractDay;
  * start at 0. The instructions look like this:
  *
  * <pre>
- * b inc 5 if a > 1
- * a inc 1 if b < 5
- * c dec -10 if a >= 1
+ * b inc 5 if a &gt; 1
+ * a inc 1 if b &lt; 5
+ * c dec -10 if a &gt;= 1
  * c inc -20 if c == 10
  * </pre>
  *
@@ -35,7 +36,7 @@ import net.bassmann.adventofcode.common.AbstractDay;
  *
  * After this process, the largest value in any register is 1.
  *
- * <p>You might also encounter <= (less than or equal to) or != (not equal to). However, the CPU
+ * <p>You might also encounter &lt;= (less than or equal to) or != (not equal to). However, the CPU
  * doesn't have the bandwidth to tell you what all the registers are named, and leaves that to you
  * to determine.
  *
@@ -60,12 +61,12 @@ public class Year2017Day08 extends AbstractDay {
 
   @Override
   public String solvePart1() {
-    return Integer.toString(getSolution().getPart1());
+    return getSolution().getPartOne();
   }
 
   @Override
   public String solvePart2() {
-    return Integer.toString(getSolution().getPart2());
+    return getSolution().getPartTwo();
   }
 
   private Solution getSolution() {
@@ -146,22 +147,4 @@ public class Year2017Day08 extends AbstractDay {
     }
   }
 
-  private static class Solution {
-
-    private final int part1;
-    private final int part2;
-
-    private Solution(int part1, int part2) {
-      this.part1 = part1;
-      this.part2 = part2;
-    }
-
-    int getPart1() {
-      return part1;
-    }
-
-    int getPart2() {
-      return part2;
-    }
-  }
 }
