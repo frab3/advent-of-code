@@ -2,34 +2,53 @@ package net.bassmann.adventofcode.year2017.day09;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.List;
+import net.bassmann.adventofcode.common.Day;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class Year2017Day09Test {
 
-  private final List<String> exampleInput = List.of("");
-
-  private final Year2017Day09 today = new Year2017Day09();
+  private final Day today = new Year2017Day09();
 
   @Test
   void solvePart1() {
-    assertEquals("0", today.solvePart1());
+    assertEquals("14421", today.solvePart1());
   }
 
   @Test
   void solvePart2() {
-    assertEquals("0", today.solvePart2());
+    assertEquals("6817", today.solvePart2());
   }
 
-  @Test
-  void part1Test() {
-    int actual = Year2017Day09.part1(exampleInput);
-    assertEquals(0, actual);
+  @ParameterizedTest
+  @CsvSource({
+      "'{}', 1",
+      "'{{{}}}', 6",
+      "'{{},{}}', 5",
+      "'{{{},{},{{}}}}', 16",
+      "'{<a>,<a>,<a>,<a>}', 1",
+      "'{{<ab>},{<ab>},{<ab>},{<ab>}}', 9",
+      "'{{<!!>},{<!!>},{<!!>},{<!!>}}', 9",
+      "'{{<a!>},{<a!>},{<a!>},{<ab>}}', 3"
+  })
+  void part1Test(String input, String expected) {
+    String actual = Year2017Day09.processInput(input).getPartOne();
+    assertEquals(expected, actual);
   }
 
-  @Test
-  void part2Test() {
-    int actual = Year2017Day09.part2(exampleInput);
-    assertEquals(0, actual);
+  @ParameterizedTest
+  @CsvSource({
+      "'<>', 0",
+      "'<random characters>', 17",
+      "'<<<<>', 3",
+      "'<{!>}>', 2",
+      "'<!!>', 0",
+      "'<!!!>>', 0",
+      "'<{o\"i!a,<{i<a>', 10"
+  })
+  void part2Test(String input, String expected) {
+    String actual = Year2017Day09.processInput(input).getPartTwo();
+    assertEquals(expected, actual);
   }
 }
