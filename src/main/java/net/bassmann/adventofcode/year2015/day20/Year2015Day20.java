@@ -1,5 +1,8 @@
 package net.bassmann.adventofcode.year2015.day20;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 import net.bassmann.adventofcode.common.AbstractDay;
 
 /**
@@ -41,6 +44,15 @@ import net.bassmann.adventofcode.common.AbstractDay;
  *
  * What is the lowest house number of the house to get at least as many presents as the number in
  * your puzzle input?
+ *
+ * <h2>Part Two</h2>
+ *
+ * The Elves decide they don't want to visit an infinite number of houses. Instead, each Elf will
+ * stop after delivering presents to 50 houses. To make up for it, they decide to deliver presents
+ * equal to eleven times their number at each house.
+ *
+ * <p>With these changes, what is the new lowest house number of the house to get at least as many
+ * presents as the number in your puzzle input?
  */
 public class Year2015Day20 extends AbstractDay {
 
@@ -50,11 +62,62 @@ public class Year2015Day20 extends AbstractDay {
 
   @Override
   public String solvePart1() {
-    return null;
+    int input = Integer.parseInt(getRiddleInput().firstLine());
+    int house = findLowestHouseNumber(input);
+    return Integer.toString(house);
   }
 
   @Override
   public String solvePart2() {
-    return null;
+    int input = Integer.parseInt(getRiddleInput().firstLine());
+    int house = findLowestHouseNumberWithLimitiedElves(input);
+    return Integer.toString(house);
+  }
+
+  static int findLowestHouseNumber(int presentsToDeliver) {
+    int limit = presentsToDeliver / 10;
+    int currentHouse = 0;
+    int sum;
+    do {
+      sum = divisors(++currentHouse).sum();
+    } while (sum < limit);
+    return currentHouse;
+  }
+
+  static int findLowestHouseNumberWithLimitiedElves(int presentsToDeliver) {
+    List<Integer> elvCount = new ArrayList<>();
+    int realLimit = presentsToDeliver / 11;
+    int currentHouse = 0;
+    int sum;
+    do {
+      elvCount.add(0);
+      sum = 0;
+      int[] f = divisors(++currentHouse).toArray();
+      for (int i : f) {
+        if (elvCount.get(i - 1) < 50) {
+          sum += i;
+          elvCount.set(i - 1, elvCount.get(i - 1) + 1);
+        }
+      }
+
+    } while (sum < realLimit);
+    return currentHouse;
+  }
+
+  /**
+   * Sigma function is the sum of all divisors of a given number.
+   */
+  static int sigma(int number) {
+    return divisors(number).sum();
+  }
+
+  /**
+   * Generates an unordered IntStream of all the divisors of a given number.
+   */
+  static IntStream divisors(int number) {
+    int squareRoot = (int) Math.sqrt(number) + 1;
+    return IntStream.range(1, squareRoot)
+        .filter(i -> number % i == 0)
+        .flatMap(i -> i * i != number ? IntStream.of(i, number / i) : IntStream.of(i));
   }
 }
