@@ -191,7 +191,7 @@ public class Year2017Day10 extends AbstractDay {
     array[j] = t;
   }
 
-  static String makeKnotHash(String input) {
+ public static String makeKnotHash(String input) {
     int[] lengthArray = toLengthArray(input);
     int[] array = IntStream.range(0, 256).toArray();
     int pos = 0;
