@@ -17,6 +17,10 @@ public class Solution {
     this(Integer.toString(partOne), Integer.toString(partTwo));
   }
 
+  public Solution(long partOne, long partTwo) {
+    this(Long.toString(partOne), Long.toString(partTwo));
+  }
+
   public String getPartOne() {
     return partOne;
   }
