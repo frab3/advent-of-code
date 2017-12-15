@@ -218,4 +218,18 @@ public class Year2017Day15 extends AbstractDay {
   static boolean last16BitMatch(long l, long m) {
     return (l & BIT_MASK) == (m & BIT_MASK);
   }
+
+  public static void main(String[] args) {
+    for (int i = 0; i < 10; i++) {
+      long start = System.currentTimeMillis();
+      long a = solve1(512, 191);
+      long end = System.currentTimeMillis();
+      System.out.println("part 1: " + a + " in " + (end - start) + " ms");
+
+      start = System.currentTimeMillis();
+      long b = solve2(512, 191);
+      end = System.currentTimeMillis();
+      System.out.println("part 2: " + b + " in " + (end - start) + " ms\n");
+    }
+  }
 }
