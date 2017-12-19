@@ -27,12 +27,12 @@ import net.bassmann.adventofcode.common.Solution;
  * to keep track of where it's been. For example:
  *
  * <pre>
- * <code>     |</code>
- * <code>     |  +--+</code>
- * <code>     A  |  C</code>
- * <code> F---|----E|--+</code>
- * <code>     |  |  |  D</code>
- * <code>     +B-+  +--+</code>
+ * <code>     |          </code>
+ * <code>     |  +--+    </code>
+ * <code>     A  |  C    </code>
+ * <code> F---|----E|--+ </code>
+ * <code>     |  |  |  D </code>
+ * <code>     +B-+  +--+ </code>
  *
  * </pre>
  *
@@ -61,12 +61,12 @@ import net.bassmann.adventofcode.common.Solution;
  * <p>For example, using the same routing diagram from the example above...
  *
  * <pre>
- * <code>     |</code>
- * <code>     |  +--+</code>
- * <code>     A  |  C</code>
- * <code> F---|----E|--+</code>
- * <code>     |  |  |  D</code>
- * <code>     +B-+  +--+</code>
+ * <code>     |          </code>
+ * <code>     |  +--+    </code>
+ * <code>     A  |  C    </code>
+ * <code> F---|----E|--+ </code>
+ * <code>     |  |  |  D </code>
+ * <code>     +B-+  +--+ </code>
  *
  * </pre>
  *
@@ -157,8 +157,7 @@ public class Year2017Day19 extends AbstractDay {
         return (input.get(row).charAt(col - 1) == ' ') ? EAST : WEST;
       case EAST:
       case WEST:
-        String rowAbove = input.get(row - 1);
-        return rowAbove.length() > col && rowAbove.charAt(col) != ' ' ? NORTH : SOUTH;
+        return input.get(row - 1).charAt(col) != ' ' ? NORTH : SOUTH;
       default:
         throw new IllegalStateException();
     }

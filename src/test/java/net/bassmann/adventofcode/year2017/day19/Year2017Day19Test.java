@@ -14,13 +14,13 @@ class Year2017Day19Test {
 
   private final List<String> example =
       List.of(
-          "     |",
-          "     |  +--+",
-          "     A  |  C",
-          " F---|--|-E---+",
-          "     |  |  |  D",
-          "     +B-+  +--+",
-          "");
+          "     |          ",
+          "     |  +--+    ",
+          "     A  |  C    ",
+          " F---|--|-E---+ ",
+          "     |  |  |  D ",
+          "     +B-+  +--+ ",
+          "                ");
 
   @Test
   void solvePart1() {
