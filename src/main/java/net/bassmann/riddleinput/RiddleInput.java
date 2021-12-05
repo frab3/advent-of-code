@@ -1,4 +1,4 @@
-package net.bassmann.adventofcode.common;
+package net.bassmann.riddleinput;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -13,14 +13,23 @@ import java.util.stream.Stream;
 /** Utility functions to access the input from a resource file, given a day. */
 public class RiddleInput {
 
+  private final String packageName;
   private final LocalDate day;
+
+  /** Lazy variable that points to the riddle input. */
   private Path path;
 
   /* Lazy vars */
   private List<String> list = null;
   private String firstLine = null;
 
-  RiddleInput(LocalDate day) {
+  public RiddleInput(LocalDate day) {
+    packageName = null;
+    this.day = day;
+  }
+
+  public RiddleInput(String packageName, LocalDate day) {
+    this.packageName = packageName;
     this.day = day;
   }
 
@@ -43,7 +52,9 @@ public class RiddleInput {
   }
 
   String getInputFilePath() {
-    return String.format("%d/day%02d.input", day.getYear(), day.getDayOfMonth());
+    return packageName != null
+        ? String.format("%s/%d/day%02d.input", packageName, day.getYear(), day.getDayOfMonth())
+        : String.format("%d/day%02d.input", day.getYear(), day.getDayOfMonth());
   }
 
   public Stream<String> lines() {

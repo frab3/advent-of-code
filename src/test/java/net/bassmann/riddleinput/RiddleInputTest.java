@@ -1,4 +1,4 @@
-package net.bassmann.adventofcode.common;
+package net.bassmann.riddleinput;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 class RiddleInputTest {
 
   @Test
-  void getInputFilePath() {
+  void getInputFilePathBackwardscompatible() {
     RiddleInput sut = new RiddleInput(LocalDate.of(2015, 12, 1));
 
     String actual = sut.getInputFilePath();
@@ -21,8 +21,17 @@ class RiddleInputTest {
   }
 
   @Test
+  void getInputFilePath() {
+    RiddleInput sut = new RiddleInput("package", LocalDate.of(2015, 12, 1));
+
+    String actual = sut.getInputFilePath();
+
+    assertEquals("package/2015/day01.input", actual);
+  }
+
+  @Test
   void getPathTest() throws IOException {
-    RiddleInput sut = new RiddleInput(LocalDate.of(1234, 12, 23));
+    RiddleInput sut = new RiddleInput("riddleinput", LocalDate.of(1234, 12, 23));
 
     Path actual = sut.getPath();
 
@@ -38,7 +47,7 @@ class RiddleInputTest {
 
   @Test
   void getFirstLine() {
-    RiddleInput sut = new RiddleInput(LocalDate.of(1234, 12, 23));
+    RiddleInput sut = new RiddleInput("riddleinput", LocalDate.of(1234, 12, 23));
 
     String actual = sut.firstLine();
 

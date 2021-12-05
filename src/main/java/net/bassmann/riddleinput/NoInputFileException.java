@@ -1,9 +1,9 @@
-package net.bassmann.adventofcode.common;
+package net.bassmann.riddleinput;
 
 import java.io.IOException;
 import java.time.LocalDate;
 
-class NoInputFileException extends IOException {
+public class NoInputFileException extends IOException {
 
   NoInputFileException(LocalDate day) {
     super(

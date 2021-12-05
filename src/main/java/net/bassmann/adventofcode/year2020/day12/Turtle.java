@@ -1,3 +1,4 @@
+package net.bassmann.adventofcode.year2020.day12;
 /**AUTHOR: NICHOLAS SEWARD
  * EMAIL: nicholas.seward@gmail.com
  * LICENSE: MIT (USE THIS HOWEVER YOU SEE FIT.)
@@ -13,15 +14,50 @@
  *    U U      U U      U U      U U      U U      U U      U U      U U
  */
 
-import java.awt.event.*;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.image.*;
-import java.io.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Polygon;
+import java.awt.RenderingHints;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.DirectColorModel;
+import java.awt.image.WritableRaster;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.PrintWriter;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JApplet;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -164,12 +200,12 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
         //window.setDefaultCloseOperation (JFrame.DISPOSE_ON_CLOSE);
         try{window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);}
         catch(Exception e){}
-        
+
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("File");
         menuBar.add(menu);
         JMenuItem menuItem1 = new JMenuItem("Save...");
-        
+
         menuItem1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
                 Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         menu.add(menuItem1);
@@ -665,7 +701,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
             if (animate) time+=(long)(speed*1000000);
             state.set(0, time);
             turtleStates.put(time, state);
-            redoStates.clear(); 
+            redoStates.clear();
         }
         if(refreshMode==REFRESH_MODE_STATE_CHANGE) draw();
         if(refreshMode==REFRESH_MODE_ANIMATED)waitUntil(time);
@@ -885,7 +921,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
             catch(Exception e){return false;}
             x=(int)point.x;
             y=(int)point.y;
-            try 
+            try
             {
                 //System.out.println((new Color(image.getRGB(x, y),true)).getAlpha());
                 return (new Color(image.getRGB(x, y),true)).getAlpha()>50;
@@ -893,7 +929,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
             catch(Exception e){return false;}
         }
     }
-    
+
     /*    .-./*)   .-./*)   .-./*)   .-./*)   .-./*)   .-./*)   .-./*)   .-./*)
      *  _/___\/  _/___\/  _/___\/  _/___\/  _/___\/  _/___\/  _/___\/  _/___\/
      *    U U      U U      U U      U U      U U      U U      U U      U U
@@ -960,7 +996,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
 
     /**
      * Turns the turtle left by the number of indicated degrees.
-     * 
+     *
      * @param angle angle in degrees
      * @return state change timestamp
      */
@@ -970,10 +1006,10 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
         long timeStamp=storeAnimatedState();
         return timeStamp;
     }
-    
+
     /**
      * Turns the turtle right by the number of indicated degrees.
-     * 
+     *
      * @param angle angle in degrees
      * @return state change timestamp
      */
@@ -1230,7 +1266,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
         long timeStamp=storeCurrentState();
         return timeStamp;
     }
-    
+
     public long stab()
     {
 		Color c=Turtle.getColor("red");
@@ -1515,7 +1551,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
         lastUpdate=0;
         if(refreshMode!=REFRESH_MODE_ON_DEMAND)updateAll();
     }
-    
+
     private void rollback()
     {
         int steps=0;
@@ -1549,7 +1585,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
             }
         }
     }
-    
+
     private void rollforward()
     {
         synchronized(turtleLock)
@@ -1855,7 +1891,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
             zoom(minx-shapeMax/2, miny-shapeMax/2, maxx+shapeMax/2, maxy+shapeMax/2);
         }
     }
-    
+
     private static void updateAll()
     {
         lastUpdate=0;
@@ -1874,7 +1910,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
     {
         synchronized(turtleLock)
         {
-            
+
             long renderTime=System.nanoTime();
             if (turtleStates.isEmpty() || lastUpdate==0)
             {
@@ -1910,7 +1946,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
                 if(t._isStamp)t.drawStamp(1, offscreen);
                 t.drawDot(1, offscreen);
             }
-        
+
             midscreen.drawImage(offscreenImage,0,0, null);
             Turtle animatedTurtle=null;
             double percent=1;
@@ -1947,7 +1983,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
                     if(t.isVisible)t.drawStamp(1, midscreen);
                     //if(t==selectedTurtle)t.drawCrossHairs(1,midscreen);
                 }
-                
+
             }
             lastUpdate=renderTime;
             //zoomFit();
@@ -1955,8 +1991,8 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
             window.repaint();
             if(applet!=null)applet.repaint();
         }
-        
-        
+
+
     }
 
     private void drawLine(double percent,Graphics2D g)
@@ -2048,7 +2084,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
         }
         g.setTransform(originalTransform);
     }
-    
+
     private void drawDot(double percent,Graphics2D g)
     {
         AffineTransform originalTransform=(AffineTransform)g.getTransform().clone();
@@ -2099,7 +2135,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
     {
         if(_location==null)return;
         double time=(System.nanoTime()/100000000)/10.0;
-        
+
         AffineTransform originalTransform=(AffineTransform)g.getTransform().clone();
         AffineTransform m = g.getTransform();
         double x1,x2,y1,y2,dir1,dir2;
@@ -2124,7 +2160,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
         int f=10;
         m.scale(scale/f, scale/f);
         g.setTransform(m);
-        
+
         int period=50;
         int r=(int)(Math.sqrt(shapeWidth*shapeWidth+shapeHeight*shapeHeight)*f/2);
         g.setColor(new Color(255,255,255));
@@ -2280,7 +2316,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
         dragx=e.getX();
         dragy=e.getY();
         modifiers+=e.getModifiers();
-        synchronized (turtleLock) 
+        synchronized (turtleLock)
         {
             for(Turtle t:turtles)
             {
@@ -2335,7 +2371,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
         modifiers=e.getModifiers();
         x=e.getX();
         y=e.getY();
-        
+
     }
 
     /**
@@ -2351,7 +2387,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
     public void keyPressed(KeyEvent e)
     {
         String keyText=KeyEvent.getKeyText(e.getKeyCode()).toLowerCase();
-        synchronized (keyLock) 
+        synchronized (keyLock)
         {
             keysDown.add(keyText);
             if (keyBindings.containsKey(keyText))
@@ -2415,7 +2451,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
                                 Method m = clsInstance.getClass().getMethod(methodName);
                                 m.invoke(clsInstance);
                             }
-                            catch(Exception e3) 
+                            catch(Exception e3)
                             {
                                 System.out.println("KeyBinding for "+keyText+" has failed.");
                                 e1.printStackTrace();
@@ -2590,8 +2626,8 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
     {
         return (canvasY-centerY)*scale+height/2.0;
     }
-    
-    
+
+
     private static void saveGCODE(String filename)
     {
 		PrintWriter out=new PrintWriter(System.out);
@@ -2601,7 +2637,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
 		}
 		catch(Exception e)
 		{
-			
+
 		}
 		out.println("M104 S200");
 		out.println("M109 S200");
@@ -2617,7 +2653,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
 		out.println("G1 F200 E5");
 		out.println("G92 E0");
 		out.println("G1 X50 Y50 F1800");
-		
+
 		double e=0;
 		synchronized(turtleLock)
         {
@@ -2640,9 +2676,9 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
 					}
 					else
 					{
-						
+
 					}
-						
+
 				}
 			}
 			out.println("G1 Z15");
@@ -2651,6 +2687,6 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
 			out.close();
 		}
 
-        
+
     }
 }

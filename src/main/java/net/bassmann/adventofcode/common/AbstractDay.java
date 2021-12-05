@@ -1,6 +1,7 @@
 package net.bassmann.adventofcode.common;
 
 import java.time.LocalDate;
+import net.bassmann.riddleinput.RiddleInput;
 
 public abstract class AbstractDay implements Day {
 

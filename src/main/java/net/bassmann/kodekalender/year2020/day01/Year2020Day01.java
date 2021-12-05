@@ -1,7 +1,6 @@
-package net.bassmann.kodekalender.year2020;
+package net.bassmann.kodekalender.year2020.day01;
 
 import java.time.LocalDate;
-import java.util.StringTokenizer;
 import net.bassmann.riddleinput.RiddleInput;
 
 public class Year2020Day01 {

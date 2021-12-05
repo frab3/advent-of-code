@@ -28,4 +28,9 @@ public class Solution {
   public String getPartTwo() {
     return partTwo;
   }
+
+  @Override
+  public String toString() {
+    return String.format("[%s, %s]", partOne, partTwo);
+  }
 }

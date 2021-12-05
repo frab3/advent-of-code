@@ -1,6 +1,6 @@
-package net.bassmann.adventofcode.common;
+package net.bassmann.riddleinput;
 
-class RiddleInputAccessException extends RuntimeException {
+public class RiddleInputAccessException extends RuntimeException {
 
   RiddleInputAccessException(Throwable cause) {
     super("Cannot access RiddleInput", cause);
