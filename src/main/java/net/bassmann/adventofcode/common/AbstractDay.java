@@ -20,4 +20,9 @@ public abstract class AbstractDay implements Day {
   protected final RiddleInput getRiddleInput() {
     return riddleInput;
   }
+
+  protected final LocalDate guessDate() {
+    System.out.println(this.getClass().getName());
+    return null;
+  }
 }
